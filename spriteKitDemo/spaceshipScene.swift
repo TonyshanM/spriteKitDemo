@@ -10,6 +10,7 @@ import UIKit
 import SpriteKit
 class spaceshipScene: SKScene {
     var contentCreate:Bool = false
+    var hull:SKSpriteNode? = nil
     
     override func didMove(to view: SKView) {
         if contentCreate == false {
@@ -30,9 +31,6 @@ class spaceshipScene: SKScene {
         
     }
     
-
-
-    
     func addrocks() {
         let rocks:SKSpriteNode = SKSpriteNode.init(color: UIColor.brown, size: CGSize(width: 8, height: 8))
         rocks.position = CGPoint(x: randWithW(), y: self.size.height - 50)
@@ -48,8 +46,9 @@ class spaceshipScene: SKScene {
     
     func newSpaceship()->(SKSpriteNode) {
         let hull:SKSpriteNode = SKSpriteNode.init(color: UIColor.gray, size: CGSize(width: 64, height: 32))
-        let movers:SKAction = SKAction.sequence([SKAction.wait(forDuration: 1.0),SKAction.moveBy(x: 100, y: 50, duration: 1.0),SKAction.wait(forDuration: 1.0),SKAction.moveBy(x: -100, y: -50, duration: 1.0)])
-        hull.run(SKAction.repeatForever(movers))
+        self.hull = hull
+//        let movers:SKAction = SKAction.sequence([SKAction.wait(forDuration: 1.0),SKAction.moveBy(x: 100, y: 50, duration: 1.0),SKAction.wait(forDuration: 1.0),SKAction.moveBy(x: -100, y: -50, duration: 1.0)])
+//        hull.run(SKAction.repeatForever(movers))
         
         let lightL:SKSpriteNode = createLight()
         lightL.position = CGPoint(x: -28.0, y: 6)
@@ -62,6 +61,14 @@ class spaceshipScene: SKScene {
         hull.physicsBody?.isDynamic = false;
         return hull
     }
+    
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for t in touches {
+            self.hull?.position = t.location(in: self)
+        }
+    }
+
     
     func createLight() -> SKSpriteNode {
         let light:SKSpriteNode = SKSpriteNode.init(color: UIColor.yellow, size: CGSize(width: 8, height: 8))
@@ -78,7 +85,6 @@ class spaceshipScene: SKScene {
             }
         }
     }
-    
     
     
     
