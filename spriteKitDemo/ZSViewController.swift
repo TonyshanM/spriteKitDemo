@@ -29,7 +29,7 @@ class ZSViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
        let hello:ZSHelloscene = ZSHelloscene()
-        hello.size = CGSize(width: 768, height: 1024)
+        hello.size = CGSize(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
        let spritekit:SKView = self.view as! SKView
         spritekit.presentScene(hello)
         
